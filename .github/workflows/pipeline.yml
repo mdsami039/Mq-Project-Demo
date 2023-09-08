@@ -1,0 +1,46 @@
+name: Validate Only
+on:
+    push:
+        branches: feature/*
+jobs:
+    validate-against-org-on-push:
+        name: 1. Validate against feature branch
+        runs-on: ubuntu-latest
+        steps: 
+          - uses: actions/checkout@v2
+            with:
+             fetch-depth: 0
+
+          - name: 'Sf Installation'
+            run: |
+                wget https://developer.salesforce.com/media/salesforce-cli/sf/channels/stable/sf-linux-x64.tar.xz
+                mkdir ~/sf
+                tar xJf sf-linux-x64.tar.xz -C ~/sf --strip-components 1
+                echo "$HOME/sf/bin" >> $GITHUB_PATH
+                ~/sf/bin/sf version
+
+          - name: 'Installing sfdx git delta'
+            run: | 
+                echo y | sf plugins:install sf-git-delta
+                sf plugins
+
+          - name: 'Validate feature branch'
+            run: |
+                sfdx force:mdapi:deploy -d ./todeploy -w180 -g -c -l NoTestRun -u devOrg
+                if: ["$?" == '1']
+                then
+                    echo 'Cancelling Validations'
+                    exit 1
+                else
+                    echo 'Cancelling Validation'
+            
+
+          
+
+          
+
+
+
+
+        
+
