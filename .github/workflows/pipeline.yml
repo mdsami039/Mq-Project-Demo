@@ -21,7 +21,7 @@ jobs:
 
           - name: 'Installing sf git delta'
             run: | 
-                echo y | sf plugins:install sfdx-git-delta@latest
+                echo y | sf plugins:install sf-git-delta@latest
              
           - name: 'Validate feature branch'
             run: |
