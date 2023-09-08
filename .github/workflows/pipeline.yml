@@ -19,11 +19,10 @@ jobs:
                 echo "$HOME/sf/bin" >> $GITHUB_PATH
                 ~/sf/bin/sf version
 
-          - name: 'Installing sfdx git delta'
+          - name: 'Installing sf git delta'
             run: | 
-                echo y | sf plugins:install sf-git-delta
-                sf plugins
-
+                echo y | sf plugins:install sfdx-git-delta@latest
+             
           - name: 'Validate feature branch'
             run: |
                 sfdx force:mdapi:deploy -d ./todeploy -w180 -g -c -l NoTestRun -u devOrg
