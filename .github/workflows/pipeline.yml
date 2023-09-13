@@ -21,7 +21,7 @@ jobs:
 
           - name: 'Validate feature branch'
             run: |
-                sf force:mdapi:deploy -d ./todeploy -w180 -g -c -l NoTestRun -u devOrg
+                sf force:auth:jwt:grant --clientid $SFKey --jwtkeyfile ./buildfiles/server.key --username $SFLogin --instanceurl https://test.salesforce.com -a devOrg    
                 if: ["$?" == '1']
                 then
                     echo 'Cancelling Validations'
