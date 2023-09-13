@@ -21,7 +21,7 @@ jobs:
 
           - name: 'Validate feature branch'
             run: |
-                sf force:auth:jwt:grant --clientid $SFKey --jwtkeyfile ./buildfiles/server.key --username $SFLogin --instanceurl https://test.salesforce.com -a devOrg    
+                sf force:auth:jwt:grant --clientid ${{ vars.SFCONSUMERKEY }} --jwtkeyfile ./buildfiles/server.key --username ${{ vars.SFUSERNAME }} --instanceurl https://test.salesforce.com -a devOrg
                 if: ["$?" == '1']
                 then
                     echo 'Cancelling Validations'
