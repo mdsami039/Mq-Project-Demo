@@ -21,13 +21,24 @@ jobs:
 
           - name: 'Validate feature branch'
             run: |
-                sfdx force:mdapi:deploy -d ./todeploy -w180 -g -c -l NoTestRun -u devOrg
+                sf force:mdapi:deploy -d ./todeploy -w180 -g -c -l NoTestRun -u devOrg
                 if: ["$?" == '1']
                 then
                     echo 'Cancelling Validations'
                     exit 1
                 else
                     echo 'Cancelling Validation'
+
+          - name: 'Validate feature branch'
+            shell: bash
+            run: |
+                echo ${{env.SFUSERNAME}}
+            
+
+
+            
+
+                    
             
 
           
