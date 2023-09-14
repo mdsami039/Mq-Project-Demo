@@ -5,10 +5,7 @@ jobs:
   check-bats-version:
     runs-on: ubuntu-latest
     steps:
-      - shell: bash
-        run: |
-           echo ${{vars.SFLOGIN}} > ./login.txt
-
+      
       - name: 'Install Salesforce CLI'
         run: |
             wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
@@ -16,6 +13,11 @@ jobs:
             tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
             echo "$HOME/sfdx/bin" >> $GITHUB_PATH
             ~/sfdx/bin/sfdx version
+        
+      - name: 'URL Secret'      
+        shell: bash
+        run: |
+              echo ${{vars.SFLOGIN}} > ./login.txt
      
       - name: 'Authenticate to org'
         run: sfdx auth:sfdxurl:store -f ./login.txt -s -a integration   
