@@ -21,7 +21,7 @@ jobs:
      
       - name: 'Authenticate to org'
         #run: sfdx auth:sfdxurl:store -f ./login.txt -s -a integration
-        run: sfdx auth:sfdxurl:store -f ./login.txt
+        run: sfdx force:org:display -u devOrg --verbose --json > authFile.json
 
       # deploy to org
       #- name: 'Validation against Develop org'
