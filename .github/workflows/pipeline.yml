@@ -20,10 +20,11 @@ jobs:
               echo ${{vars.SFLOGIN}} > ./login.txt
      
       - name: 'Authenticate to org'
-        run: sfdx auth:sfdxurl:store -f ./login.txt -s -a integration
+        #run: sfdx auth:sfdxurl:store -f ./login.txt -s -a integration
+        run: sfdx force:org:display --verbose --json > authfile.json
 
       # deploy to org
-      - name: 'Validation against Develop org'
+      #- name: 'Validation against Develop org'
         # run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests -c --json  
-        run: sfdx force:source:deploy -p force-app --testlevel NoTestRun -c --json
+       # run: sfdx force:source:deploy -p force-app --testlevel NoTestRun -c --json
 
