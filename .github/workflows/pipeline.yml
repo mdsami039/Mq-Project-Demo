@@ -20,5 +20,5 @@ jobs:
               echo ${{vars.SFLOGIN}} > ./login.txt
      
       - name: 'Authenticate to org'
-        run: sf auth:sfurl:store -f ./login.txt -s -a integration   
+        run: sf auth:sfdxurl:store -f ./login.txt -s -a integration   
 
