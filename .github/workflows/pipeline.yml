@@ -1,30 +1,13 @@
-name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
+name: SFDX-CLI Deploy from Repository
 on: [push]
 jobs:
-  check-bats-version:
+  SFDX-CLI-Deploy:
     runs-on: ubuntu-latest
     steps:
-      
-      - name: 'Install Salesforce CLI'
-        run: |
-            wget https://developer.salesforce.com/media/salesforce-cli/sf/channels/stable/sf-linux-x64.tar.xz
-            mkdir ~/sf
-            tar xJf sf-linux-x64.tar.xz -C ~/sf --strip-components 1
-            echo "$HOME/sf/bin" >> $GITHUB_PATH
-            ~/sf/bin/sf version
-        
-      - name: 'URL Secret'      
-        shell: bash
-        run: |
-              echo ${{vars.SFLOGIN}} > ./login.txt
-     
-      - name: 'Authenticate to org'
-        #run: sfdx auth:sfdxurl:store -f ./login.txt -s -a integration
-        run: sfdx force:org:display -u devOrg --verbose --json > authFile.json
-
-      # deploy to org
-      #- name: 'Validation against Develop org'
-        # run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests -c --json  
-       # run: sfdx force:source:deploy -p force-app --testlevel NoTestRun -c --json
-
+      - run: echo "🐧 GitHub Action running on ${{ runner.os }}"
+      - run: echo "🔎 Retrieving ${{ github.ref }} from ${{ github.repository }}."
+      - uses: actions/checkout@v2
+      - run: npm install sfdx-cli -g
+      - run: echo "${{ secrets.SALESFORCE_JWT_SECRET_KEY }}" > server.key
+      - run: sfdx force:auth:jwt:grant --clientid=${{ secrets.SALESFORCE_CONSUMER_KEY }} --jwtkeyfile=server.key --username=${{ secrets.SALESFORCE_DEVHUB_USERNAME }} --setdefaultdevhubusername
+      - run: sfdx force:source:deploy --manifest=manifest/package.xml --testlevel=RunLocalTests -u ${{ secrets.SALESFORCE_DEVHUB_USERNAME }}
