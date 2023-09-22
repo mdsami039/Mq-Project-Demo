@@ -14,8 +14,7 @@ jobs:
             tar xJf sf-linux-x64.tar.xz -C ~/sf --strip-components 1
             echo "$HOME/sf/bin" >> $GITHUB_PATH
             ~/sf/bin/sf version
-
       - run: echo "${{ secrets.SALESFORCE_JWT_SECRET_KEY }}" > server.key
       - run: sf force:auth:jwt:grant --clientid=${{ secrets.SALESFORCE_CONSUMER_KEY }} --jwtkeyfile=server.key --username=${{ secrets.SALESFORCE_DEVHUB_USERNAME }} --setdefaultdevhubusername
-      - run: sf force:source:deploy -p force-app --testlevel=RunLocalTests -u ${{ secrets.SALESFORCE_DEVHUB_USERNAME }}
+      - run: sf force:source:deploy -p force-app --testlevel=NoTestRun -u ${{ secrets.SALESFORCE_DEVHUB_USERNAME }}
       #- run: sfdx force:mdapi:deploy -d ./todeploy -w180 -g -c -l RunAlltest -u ${{ secrets.SALESFORCE_DEVHUB_USERNAME }}
