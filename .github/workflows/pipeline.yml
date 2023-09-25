@@ -7,10 +7,6 @@ jobs:
       - run: echo "🐧 GitHub Action running on ${{ runner.os }}"
       - run: echo "🔎 Retrieving ${{ github.ref }} from ${{ github.repository }}."
       - uses: actions/checkout@v2
-      image:
-      - name: ghcr.io/dxatscale/sfpowerscripts:21.1.0-4921763328
-      - run: npm i puppeteer
-      - run: npm i chromium
       - name: 'Install Salesforce CLI'
         run: |
             wget https://developer.salesforce.com/media/salesforce-cli/sf/channels/stable/sf-linux-x64.tar.xz
